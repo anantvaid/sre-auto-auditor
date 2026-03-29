@@ -44,7 +44,7 @@ async def run_audit(request: AuditRequest):
             session_service=session_service
         )
 
-        session = await session_service.create_session(  # ✅ await here
+        session = await session_service.create_session(  # await here
             app_name="sre-auditor",
             user_id="api",
             session_id=str(uuid.uuid4())
@@ -54,7 +54,7 @@ async def run_audit(request: AuditRequest):
         content = types.Content(role="user", parts=[types.Part(text=prompt)])
 
         report = ""
-        async for event in runner.run_async(             # ✅ run_async + async for
+        async for event in runner.run_async(             # run_async + async for
             user_id="api",
             session_id=session.id,
             new_message=content
