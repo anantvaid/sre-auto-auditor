@@ -2,7 +2,7 @@ import os
 import logging
 from google.adk.agents import Agent, SequentialAgent
 from google.adk.tools.tool_context import ToolContext
-from agents.reliability_agent import get_reliability_agents  # ✅ match the actual function name
+from agents.reliability_agent import get_reliability_agents
 
 def add_target_to_state(tool_context: ToolContext, repo_url: str) -> dict[str, str]:
     """Saves the target repository URL to the shared ADK state."""
@@ -13,12 +13,12 @@ def add_target_to_state(tool_context: ToolContext, repo_url: str) -> dict[str, s
 def get_root_auditor() -> Agent:
     model_name = os.getenv("MODEL", "gemini-2.5-flash")
 
-    auditor, formatter = get_reliability_agents()  # ✅ unpack the two agents
+    auditor, formatter = get_reliability_agents()  # unpack the two agents
 
     audit_workflow = SequentialAgent(
         name="audit_workflow",
         description="The main pipeline for fetching code and auditing it.",
-        sub_agents=[auditor, formatter]  # ✅ flat list, not a tuple
+        sub_agents=[auditor, formatter]  # flat list, not a tuple
     )
 
     return Agent(
